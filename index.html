@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>MARZ HUB - REGISTRASI MEOWL</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0f1e 0%, #0a1a2f 50%, #0b1e2f 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Partikel latar */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(0, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Container utama */
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 500px;
+            background: rgba(10, 20, 30, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .settings-bar {
+            display: flex;
+            justify-content: flex-end;
+            padding: 16px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .settings-btn {
+            background: transparent;
+            border: none;
+            color: #88ccff;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.2s;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-btn:hover {
+            background: rgba(0, 255, 255, 0.2);
+            transform: rotate(30deg);
+        }
+
+        .content {
+            padding: 30px 25px 40px;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00ccff, #0066ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .logo p {
+            color: #8aaacc;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccddff;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1.5px solid rgba(0, 255, 255, 0.3);
+            border-radius: 40px;
+            color: #fff;
+            font-size: 15px;
+            transition: all 0.2s;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #00ccff;
+            box-shadow: 0 0 12px rgba(0, 204, 255, 0.3);
+        }
+
+        .btn-confirm {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #00ccff, #0066ff);
+            border: none;
+            border-radius: 40px;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 12px;
+            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+        }
+
+        .btn-confirm:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0, 102, 255, 0.5);
+        }
+
+        .success-box {
+            background: rgba(0, 50, 50, 0.6);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(0, 255, 200, 0.4);
+            text-align: center;
+        }
+
+        .code-box {
+            background: #0a0f1e;
+            padding: 12px;
+            border-radius: 40px;
+            font-family: monospace;
+            font-size: 24px;
+            letter-spacing: 4px;
+            font-weight: bold;
+            color: #00ffcc;
+            margin: 12px 0;
+            border: 1px dashed #00ffcc;
+        }
+
+        .success-text {
+            color: #88ffaa;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .warning-text {
+            color: #ffaa66;
+            font-size: 12px;
+            margin-top: 16px;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 11px;
+            color: #5588aa;
+        }
+
+        .step-2, .step-3 {
+            display: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #0e1622;
+            border-radius: 32px;
+            width: 90%;
+            max-width: 350px;
+            border: 1px solid #00ccff;
+            padding: 24px;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 12px;
+            background: #1a1f2e;
+            border: 1px solid #3366aa;
+            border-radius: 40px;
+            color: white;
+            margin: 12px 0;
+        }
+
+        .close-modal {
+            background: #ff3366;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            color: white;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+<div class="bg-particles" id="particles"></div>
+
+<div class="container">
+    <div class="settings-bar">
+        <button class="settings-btn" id="settingsBtn">⚙️</button>
+    </div>
+    <div class="content">
+        <div class="logo">
+            <h1>✦ MEOWL REGISTRY ✦</h1>
+            <p>secure registration system</p>
+        </div>
+
+        <div id="step1">
+            <div class="form-group">
+                <label>🎮 ROBLOX USERNAME</label>
+                <input type="text" id="robloxUser" placeholder="Username Roblox">
+            </div>
+            <button class="btn-confirm" id="nextToTikTok">Konfirmasi →</button>
+        </div>
+
+        <div id="step2" class="step-2">
+            <div class="form-group">
+                <label>📱 TIKTOK USERNAME</label>
+                <input type="text" id="tiktokUser" placeholder="@username atau username TikTok">
+            </div>
+            <button class="btn-confirm" id="submitRegistration">Daftar Sekarang</button>
+            <button class="btn-confirm" id="backToStep1" style="background: #2a4f6e; margin-top: 10px;">← Kembali</button>
+        </div>
+
+        <div id="step3" class="step-3">
+            <div class="success-box">
+                <div class="code-box" id="randomCode">——</div>
+                <div class="success-text">
+                    ✨ SELAMAT! ✨<br>
+                    🎁 Kamu mendapatkan <strong>15 MEOWL</strong> 🎁<br><br>
+                    📨 Username telah dikirim ke admin.<br>
+                    Admin akan segera DM TikTok kamu.
+                </div>
+                <div class="warning-text">💡 Simpan kode acak di atas.</div>
+            </div>
+            <button class="btn-confirm" id="resetForm" style="background: #2a4f6e;">Daftar Lagi</button>
+        </div>
+
+        <div class="footer-note">© MARZ SYSTEM — Data tersimpan aman</div>
+    </div>
+</div>
+
+<div id="adminModal" class="modal">
+    <div class="modal-content">
+        <h3 style="color:#00ccff;">🔐 ADMIN PANEL</h3>
+        <input type="text" id="adminPass" placeholder="Masukkan password admin">
+        <button class="btn-confirm" id="verifyAdmin" style="margin-top: 0;">Login</button>
+        <button class="close-modal" id="closeModal">Tutup</button>
+    </div>
+</div>
+
+<script>
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    // GANTI URL INI DENGAN WEB APP DARI GUE
+    const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxNQpS8DlUyMp4rR6sVzH9kK2wXjF7cB3nM1qL5tY/exec";
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+    // Admin password
+    const ADMIN_PASSWORD = "marzdeep";
+
+    // DOM Elements
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+    const robloxInput = document.getElementById('robloxUser');
+    const tiktokInput = document.getElementById('tiktokUser');
+    const codeSpan = document.getElementById('randomCode');
+    const adminModal = document.getElementById('adminModal');
+
+    function generateCode() {
+        return 'MARZ' + Math.random().toString(36).substring(2, 8).toUpperCase();
+    }
+
+    document.getElementById('nextToTikTok').onclick = () => {
+        if (!robloxInput.value.trim()) return alert("Masukkan username Roblox!");
+        step1.style.display = 'none';
+        step2.style.display = 'block';
+    };
+
+    document.getElementById('backToStep1').onclick = () => {
+        step2.style.display = 'none';
+        step1.style.display = 'block';
+    };
+
+    document.getElementById('submitRegistration').onclick = async () => {
+        const roblox = robloxInput.value.trim();
+        const tiktok = tiktokInput.value.trim();
+        if (!roblox || !tiktok) return alert("Harap isi semua!");
+
+        const code = generateCode();
+        codeSpan.innerText = code;
+
+        // Kirim ke Google Sheets
+        try {
+            await fetch(WEBAPP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ roblox, tiktok, code })
+            });
+            console.log("Data terkirim");
+        } catch (err) {
+            console.error("Gagal kirim:", err);
+        }
+
+        step2.style.display = 'none';
+        step3.style.display = 'block';
+    };
+
+    document.getElementById('resetForm').onclick = () => {
+        step3.style.display = 'none';
+        step1.style.display = 'block';
+        robloxInput.value = '';
+        tiktokInput.value = '';
+    };
+
+    // Admin panel
+    document.getElementById('settingsBtn').onclick = () => {
+        adminModal.style.display = 'flex';
+        document.getElementById('adminPass').value = '';
+    };
+    document.getElementById('closeModal').onclick = () => adminModal.style.display = 'none';
+    document.getElementById('verifyAdmin').onclick = () => {
+        const pass = document.getElementById('adminPass').value;
+        if (pass === ADMIN_PASSWORD) {
+            alert("🔓 Akses admin diberikan!\nData pendaftar bisa dilihat di Google Sheets.");
+            adminModal.style.display = 'none';
+        } else {
+            alert("❌ Password salah!");
+        }
+    };
+    window.onclick = (e) => { if (e.target === adminModal) adminModal.style.display = 'none'; };
+
+    // Partikel
+    function createParticles() {
+        const container = document.getElementById('particles');
+        for (let i = 0; i < 40; i++) {
+            const p = document.createElement('div');
+            p.classList.add('particle');
+            const size = Math.random() * 6 + 2;
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDuration = Math.random() * 15 + 10 + 's';
+            p.style.animationDelay = Math.random() * 10 + 's';
+            container.appendChild(p);
+        }
+    }
+    createParticles();
+</script>
+</body>
+</html>
